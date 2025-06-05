@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { ShoppingCart, Plus, Search } from "lucide-react";
+// import { usePathname } from "next/navigation";
+import { ShoppingCart } from "lucide-react";
 
 export default function Navigation() {
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 right-0 z-10">
