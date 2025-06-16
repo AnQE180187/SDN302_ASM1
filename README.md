@@ -1,37 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-Commerce Web App with User Authentication & Product Management
+
+A clothing e-commerce website built with Next.js, MongoDB, and NextAuth.js. This application allows users to register, login, and manage products, with a focus on RESTful API development, user authentication, and CRUD operations.
+
+## Features
+
+- **User Authentication**
+
+  - Register with email and password
+  - Login to access protected features
+  - JWT-based authentication with NextAuth.js
+
+- **Product Management**
+
+  - Create, read, update, and delete products
+  - Image upload (Base64 storage)
+  - Protected routes for authenticated users only
+
+- **UI Features**
+  - Responsive design
+  - Product listing with pagination
+  - Search and filter products
+  - Dynamic UI updates based on authentication state
+
+## Tech Stack
+
+- **Frontend & API**: Next.js (App Router)
+- **Database**: MongoDB
+- **ORM**: Prisma
+- **Authentication**: NextAuth.js
+- **Styling**: Tailwind CSS
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and npm
+- MongoDB database (local or MongoDB Atlas)
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/e-commerce-nextjs.git
+cd e-commerce-nextjs
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Set up environment variables
+   - Copy `.env.example` to `.env`
+   - Update the MongoDB connection string and NextAuth secret
+
+```
+DATABASE_URL="mongodb+srv://username:password@cluster.mongodb.net/database?retryWrites=true&w=majority"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key-for-jwt-tokens-here"
+```
+
+4. Push the Prisma schema to your database
+
+```bash
+npx prisma db push
+```
+
+5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+6. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Authentication**
 
-## Learn More
+  - `POST /api/auth/register` - Register a new user
+  - `POST /api/auth/[...nextauth]` - NextAuth.js authentication routes
 
-To learn more about Next.js, take a look at the following resources:
+- **Products**
+  - `GET /api/products` - List all products
+  - `GET /api/products/:id` - Get a single product
+  - `POST /api/products` - Create a new product (authenticated)
+  - `PUT /api/products/:id` - Update a product (authenticated)
+  - `DELETE /api/products/:id` - Delete a product (authenticated)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Deploying to Vercel
 
-## Deploy on Vercel
+1. Create a Vercel account at [vercel.com](https://vercel.com)
+2. Install the Vercel CLI:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm install -g vercel
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# SDN302_ASM1
+3. Login to Vercel:
+
+```bash
+vercel login
+```
+
+4. Deploy your application:
+
+```bash
+vercel
+```
+
+5. Set up environment variables in the Vercel dashboard
+   - Add your `DATABASE_URL` and `NEXTAUTH_SECRET`
+   - Set `NEXTAUTH_URL` to your deployment URL
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

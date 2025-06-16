@@ -1,14 +1,63 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
-export default function ProductDeleteButton({ productId }: { productId: string }) {
+export default function ProductDeleteButton({
+  productId,
+  userId,
+}: {
+  productId: string;
+  userId: string;
+}) {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  // Check if the current user is the owner of the product
+  const isOwner = session?.user?.id === userId;
+
   const handleDelete = async () => {
+    if (!session) {
+      toast.error("You must be logged in to delete products");
+      return;
+    }
+
+    if (!isOwner) {
+      toast.error("You can only delete your own products");
+      return;
+    }
+
     if (confirm("Are you sure you want to delete this product?")) {
-      await fetch(`/api/products/${productId}`, { method: "DELETE" });
-      window.location.reload();
+      try {
+        const response = await fetch(`/api/products/${productId}`, {
+          method: "DELETE",
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to delete product");
+        }
+
+        toast.success("Product deleted successfully");
+        router.push("/");
+        router.refresh();
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        } else {
+          toast.error("An error occurred while deleting the product");
+        }
+      }
     }
   };
+
+  // Only render the button if the user is authenticated and is the owner
+  if (!session || !isOwner) {
+    return null;
+  }
 
   return (
     <button
@@ -20,4 +69,4 @@ export default function ProductDeleteButton({ productId }: { productId: string }
       Delete
     </button>
   );
-} 
+}

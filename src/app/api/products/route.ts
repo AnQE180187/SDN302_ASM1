@@ -1,17 +1,27 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/utils/prisma";
+import { getCurrentUser } from "@/utils/session";
 
 // GET all products
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: "desc",
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      data: products 
+      data: products,
     });
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -25,6 +35,15 @@ export async function GET() {
 // POST new product
 export async function POST(request: Request) {
   try {
+    // Check authentication
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate required fields
@@ -40,14 +59,15 @@ export async function POST(request: Request) {
         name: body.name,
         description: body.description,
         price: parseFloat(body.price),
-        image: body.image || null
-      }
+        image: body.image || null,
+        userId: user.id,
+      },
     });
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       message: "Product created successfully",
-      data: product 
+      data: product,
     });
   } catch (error) {
     console.error("Error creating product:", error);

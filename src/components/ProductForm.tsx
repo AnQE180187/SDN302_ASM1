@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 interface ProductFormProps {
   product?: {
@@ -12,19 +13,47 @@ interface ProductFormProps {
     description: string;
     price: number;
     image?: string | null;
+    userId?: string;
   };
   mode: "add" | "edit";
 }
 
 export default function ProductForm({ product, mode }: ProductFormProps) {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(
     product?.image || null
   );
 
+  // Check if user is authenticated
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      toast.error("You must be logged in to manage products");
+      router.push("/auth/login");
+    }
+
+    // For edit mode, check if the user owns the product
+    if (
+      mode === "edit" &&
+      status === "authenticated" &&
+      product?.userId &&
+      product.userId !== session?.user?.id
+    ) {
+      toast.error("You can only edit your own products");
+      router.push("/");
+    }
+  }, [status, router, mode, product, session]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Double-check authentication
+    if (!session) {
+      toast.error("You must be logged in to manage products");
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
