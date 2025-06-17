@@ -12,13 +12,13 @@ interface EditProductPageProps {
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
   const { id } = await params;
-
+  
   // Check if user is authenticated
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
     redirect("/auth/login?callbackUrl=" + encodeURIComponent(`/products/${id}/edit`));
   }
-
+  
   const product = await prisma.product.findUnique({
     where: {
       id,
@@ -28,7 +28,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
   if (!product) {
     notFound();
   }
-
+  
   // Check if the user owns the product
   if (product.userId !== session.user.id) {
     redirect("/"); // Redirect to home if not the owner

@@ -40,13 +40,16 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Redirect to login if not authenticated
     if (status === "unauthenticated") {
       router.push("/auth/login?callbackUrl=/profile");
     }
 
+    // Fetch user's data
     if (status === "authenticated") {
       const fetchUserData = async () => {
         try {
+          // Fetch user profile
           const profileResponse = await fetch("/api/user/profile");
           if (!profileResponse.ok) {
             throw new Error("Failed to fetch user profile");
@@ -54,6 +57,7 @@ export default function ProfilePage() {
           const profileData = await profileResponse.json();
           setUserProfile(profileData.data);
 
+          // Fetch user's products
           const productsResponse = await fetch("/api/products/user");
           if (!productsResponse.ok) {
             throw new Error("Failed to fetch products");
@@ -80,9 +84,8 @@ export default function ProfilePage() {
   }
 
   if (!session) {
-    return null;
+    return null; // This should not render as the user will be redirected
   }
-
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,8 +144,7 @@ export default function ProfilePage() {
               )}
             </div>
           </div>
-        </div>
-
+        </div>{" "}
         <div className="mb-6 flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-900">My Products</h2>
           <Link
@@ -153,7 +155,6 @@ export default function ProfilePage() {
             Add New Product
           </Link>
         </div>
-
         {products.length === 0 ? (
           <div className="bg-white rounded-xl shadow-sm p-12 text-center">
             <Package className="h-16 w-16 text-gray-400 mx-auto mb-4" />
