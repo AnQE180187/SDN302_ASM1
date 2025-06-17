@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, Search, LogOut, User } from "lucide-react";
+import { ShoppingCart, LogOut, User } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 
 export default function Navigation() {
@@ -37,8 +37,8 @@ export default function Navigation() {
             <Link
               href="/"
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${pathname === "/"
-                  ? "bg-blue-100 text-blue-700"
-                  : "text-gray-600 hover:text-blue-700 hover:bg-blue-50"
+                ? "bg-blue-100 text-blue-700"
+                : "text-gray-600 hover:text-blue-700 hover:bg-blue-50"
                 }`}
             >
               All Products
