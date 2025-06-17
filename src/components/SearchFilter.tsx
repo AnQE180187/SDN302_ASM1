@@ -47,15 +47,15 @@ export default function SearchFilter() {
               placeholder="Search products by name..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              className="input-field w-full pl-10"
+              className="w-full px-4 py-2 pl-10 border border-gray-200 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-500" />
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
           </div>
           <select
             name="price"
             onChange={(e) => setPriceValue(e.target.value)}
             value={priceValue}
-            className="input-field"
+            className="px-4 py-2 border border-gray-200 rounded-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">Price Range</option>
             <option value="0-50">$0 - $50</option>
@@ -65,7 +65,7 @@ export default function SearchFilter() {
           </select>
           <button
             type="submit"
-            className="btn-primary flex items-center gap-2"
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 flex items-center gap-2"
           >
             <Search className="w-4 h-4" />
             Search
@@ -74,7 +74,7 @@ export default function SearchFilter() {
             <button
               type="button"
               onClick={handleClear}
-              className="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white flex items-center gap-2 transition-colors duration-200"
+              className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center gap-2"
             >
               <X className="w-4 h-4" />
               Clear Filters
@@ -82,16 +82,16 @@ export default function SearchFilter() {
           )}
         </div>
         {hasActiveFilters && (
-          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+          <div className="flex items-center gap-2 text-sm text-gray-600">
             <Filter className="w-4 h-4" />
             <span>Active Filters:</span>
             {searchParams.get("query") && (
-              <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full">
+              <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
                 Search: {searchParams.get("query")}
               </span>
             )}
             {searchParams.get("price") && (
-              <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-full">
+              <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
                 Price: {searchParams.get("price")}
               </span>
             )}

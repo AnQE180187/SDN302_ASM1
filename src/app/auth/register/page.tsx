@@ -17,6 +17,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
 
+    // Validate password matching
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -43,6 +44,7 @@ export default function RegisterPage() {
         throw new Error(data.error || "Registration failed");
       }
 
+      // Redirect to login page on successful registration
       router.push("/auth/login");
     } catch (error) {
       if (error instanceof Error) {
@@ -55,110 +57,84 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-950">
-      <div className="w-full max-w-md p-8 space-y-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Create Account
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">
-            Join us and start your journey
-          </p>
+    <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-2xl font-semibold text-center mb-6 text-black">
+        Register
+      </h1>
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
+      )}
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-gray-700 mb-2">
+            Name
+          </label>{" "}
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
         </div>
-
-        {error && (
-          <div className="alert alert-error">
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div className="form-group">
-            <label htmlFor="name" className="form-label">
-              Full Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="input-field w-full"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email" className="form-label">
-              Email Address
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field w-full"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-field w-full"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="input-field w-full"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="btn-primary w-full flex justify-center items-center"
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-gray-700 mb-2">
+            Email
+          </label>{" "}
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-700 mb-2">
+            Password
+          </label>{" "}
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="mb-6">
+          <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">
+            Confirm Password
+          </label>{" "}
+          <input
+            id="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>{" "}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-white border border-blue-500  py-2 px-4 rounded text-black hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 font-medium"
+        >
+          {isLoading ? "Registering..." : "Register"}
+        </button>
+      </form>{" "}
+      <div className="mt-4 text-center">
+        <p className="text-black">
+          Already have an account?{" "}
+          <Link
+            href="/auth/login"
+            className="text-blue-500 hover:text-blue-700 font-semibold"
           >
-            {isLoading ? (
-              <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Creating account...
-              </span>
-            ) : (
-              "Create Account"
-            )}
-          </button>
-        </form>
-
-        <div className="text-center mt-6">
-          <p className="text-gray-600 dark:text-gray-300">
-            Already have an account?{" "}
-            <Link
-              href="/auth/login"
-              className="text-primary hover:text-primary-dark font-semibold transition-colors"
-            >
-              Sign in
-            </Link>
-          </p>
-        </div>
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,17 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #22c55e;
-  --primary-dark: #16a34a;
-  --primary-light: #4ade80;
   --background: #ffffff;
   --foreground: #171717;
-  --secondary: #f0fdf4;
-  --accent: #86efac;
-  --error: #ef4444;
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --border: #e5e7eb;
 }
 
 @theme inline {
@@ -25,97 +16,11 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --secondary: #064e3b;
-    --border: #1f2937;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
-/* Common UI Components */
-.btn-primary {
-  background-color: var(--primary);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-dark);
-}
-
-.input-field {
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  background-color: var(--background);
-  color: var(--foreground);
-  transition: all 0.2s;
-}
-
-.input-field:focus {
-  border-color: var(--primary);
-  outline: none;
-  box-shadow: 0 0 0 2px var(--primary-light);
-}
-
-.card {
-  background-color: var(--background);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-}
-
-/* Form styles */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--foreground);
-}
-
-/* Navigation */
-.nav-link {
-  color: var(--foreground);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
-}
-
-.nav-link:hover {
-  background-color: var(--secondary);
-  color: var(--primary);
-}
-
-/* Alert styles */
-.alert {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.alert-success {
-  background-color: var(--success);
-  color: white;
-}
-
-.alert-error {
-  background-color: var(--error);
-  color: white;
-}
-
-.alert-warning {
-  background-color: var(--warning);
-  color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
