@@ -216,8 +216,8 @@ export default async function Home({
                 query: { ...params, page: String(page - 1) },
               }}
               className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors duration-200 ${page === 1
-                  ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                  : "bg-white dark:bg-gray-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/50"
+                ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                : "bg-white dark:bg-gray-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/50"
                 }`}
               aria-disabled={page === 1}
               tabIndex={page === 1 ? -1 : 0}
@@ -233,13 +233,13 @@ export default async function Home({
                 query: { ...params, page: String(page + 1) },
               }}
               className={`px-4 py-2 rounded-md border text-sm font-medium transition-colors duration-200 ${page === totalPages
-                  ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                  : "bg-white dark:bg-gray-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/50"
+                ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                : "bg-white dark:bg-gray-800 text-green-600 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/50"
                 }`}
               aria-disabled={page === totalPages}
               tabIndex={page === totalPages ? -1 : 0}
             >
-              Next
+              Next.
             </Link>
           </div>
         )}
