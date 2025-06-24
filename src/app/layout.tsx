@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
+import MainNavigation from "@/components/MainNavigation";
 import { Toaster } from "react-hot-toast";
 import NextAuthProvider from "@/components/NextAuthProvider";
+import { CartProvider } from "@/contexts/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
-          <Navigation />
-          <main className="pt-16">{children}</main>
-          <Toaster position="top-right" />
+          <CartProvider>
+            <MainNavigation />
+            <main className="pt-16">{children}</main>
+            <Toaster position="top-right" />
+          </CartProvider>
         </NextAuthProvider>
       </body>
     </html>

@@ -1,12 +1,11 @@
 import { prisma } from "@/utils/prisma";
 import Link from "next/link";
-import Image from "next/image";
 import SearchFilter from "@/components/SearchFilter";
-import { Plus, Package, Pencil } from "lucide-react";
-import ProductDeleteButton from "@/components/ProductDeleteButton";
+import { Plus, Package } from "lucide-react";
 import { Prisma } from "@prisma/client";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/auth";
+import ProductCard from "@/components/ProductCard";
 
 const PAGE_SIZE = 8;
 
@@ -121,88 +120,11 @@ export default async function Home({
               const isOwner = session?.user?.id === product.userId;
 
               return (
-                <div
+                <ProductCard
                   key={product.id}
-                  className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col"
-                >
-                  {" "}
-                  <Link href={`/products/${product.id}`} className="block">
-                    <div className="relative w-full pt-[100%]">
-                      {product.image ? (
-                        <Image
-                          src={product.image}
-                          alt={product.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-200"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-                          <Package className="h-12 w-12 text-gray-400" />
-                        </div>
-                      )}
-                    </div>
-                  </Link>
-                  <div className="p-4 flex-1 flex flex-col">
-                    <Link href={`/products/${product.id}`} className="block">
-                      <div className="flex items-start justify-between gap-2">
-                        <h2 className="text-lg font-semibold text-gray-900 line-clamp-2">
-                          {product.name}
-                        </h2>
-                        <p className="text-lg font-bold text-blue-600 whitespace-nowrap">
-                          ${product.price.toFixed(2)}
-                        </p>
-                      </div>
-                      <p className="text-gray-600 text-sm line-clamp-2 mt-2">
-                        {product.description}
-                      </p>
-                    </Link>
-
-                    {product.user && (
-                      <p className="text-xs text-gray-500 mt-2">
-                        Added by: {product.user.name || product.user.email}
-                      </p>
-                    )}
-
-                    {isAuthenticated ? (
-                      isOwner ? (
-                        <div className="flex gap-2 mt-4">
-                          <Link
-                            href={`/products/${product.id}/edit`}
-                            className="flex-1 inline-flex items-center justify-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                          >
-                            <Pencil className="w-4 h-4 mr-1" />
-                            Edit
-                          </Link>
-                          <div className="flex-1">
-                            <ProductDeleteButton
-                              productId={product.id}
-                              userId={product.userId}
-                            />
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="mt-4">
-                          <Link
-                            href={`/products/${product.id}`}
-                            className="w-full inline-flex items-center justify-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                          >
-                            View Details
-                          </Link>
-                        </div>
-                      )
-                    ) : (
-                      <div className="mt-4">
-                        <Link
-                          href={`/products/${product.id}`}
-                          className="w-full inline-flex items-center justify-center px-3 py-1 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                        >
-                          View Details
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  product={product}
+                  isOwner={isOwner}
+                />
               );
             })
           )}{" "}
