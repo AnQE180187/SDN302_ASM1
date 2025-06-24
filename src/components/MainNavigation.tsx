@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingCart, Search, LogOut, User, Package } from "lucide-react";
+import { ShoppingCart, LogOut, User, Package } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useCart } from "@/contexts/CartContext";
 
